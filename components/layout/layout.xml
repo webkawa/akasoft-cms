@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="Layout" 
+         type="classic" >
+    <selectors>
+        <selector id="background">img</selector>
+        <selector id="header">div.header</selector>
+        <selector id="headerInner">div.header > div</selector>
+        <selector id="navigation">div.navigation</selector>
+        <selector id="navigationInner">div.navigation > div</selector>
+        <selector id="body">div.body</selector>
+        <selector id="bodyInner">div.body > div</selector>
+        <selector id="bodyLeft">div.body > div > div.left</selector>
+        <selector id="bodyCenter">div.body > div > div.center</selector>
+        <selector id="bodyMask">div.body > div > div.center > div.mask</selector>
+        <selector id="bodyCore">div.body > div > div.center > div.core</selector>
+        <selector id="bodyRight">div.body > div > div.right</selector>
+        <selector id="footer">div.footer</selector>
+        <selector id="footerInner">div.footer > div</selector>
+    </selectors>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>1200</speed>
+            <easing>easeInOutExpo</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="OpenHorizontal">
+            <speed>1200</speed>
+            <easing>easeInQuart</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+            <move>
+                <property>width</property>
+                <from>0px</from>
+                <to>1280px</to>
+            </move>
+        </trajectory>
+        <trajectory name="OpenVertical">
+            <speed>1200</speed>
+            <easing>easeOutQuart</easing>
+            <move clean="false">
+                <property>height</property>
+                <from>0px</from>
+                <goal call="get">
+                    <parameter>body_height</parameter>
+                </goal>
+                <to>640px</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <trigger bind="resize">
+        <target>$WINDOW</target>
+        <action call="refresh" on="Enhanceable" />
+        <action call="defineBodyHeight" />
+        <action call="css">
+            <parameter>bodyInner</parameter>
+            <parameter>height</parameter>
+            <parameter variable="true">body_height</parameter>
+        </action>
+    </trigger>
+    <loader>
+        <dom>
+            <![CDATA[
+                <img src="data/img/background.jpg" />
+                <div class="header">
+                    <div />
+                </div>
+                <div class="navigation">
+                    <div />
+                </div>
+                <div class="body">
+                    <div>
+                        <div class="left" />
+                        <div class="center">
+                            <div class="mask" />
+                            <div class="core" />
+                        </div>
+                        <div class="right" />
+                    </div>
+                </div>
+                <div class="footer" />
+            ]]>
+        </dom>
+        <style target="$SELF">positionAbsolute width100per height100per backgroundBlack</style>
+        <style target="header">width100per height96px</style>
+        <style target="headerInner">width1024px height96px marginHAuto</style>
+        <style target="navigation">width100per height64px</style>
+        <style target="navigationInner">width1024px height64px marginHAuto</style>
+        <style target="body">positionRelative width100per</style>
+        <style target="bodyInner">positionRelative width1280px marginHAuto</style>
+        <style target="bodyLeft bodyRight">positionAbsolute top0px bottom0px width128px</style>
+        <style target="bodyLeft">left0px</style>
+        <style target="bodyRight">right0px</style>
+        <style target="bodyCenter">positionAbsolute top0px bottom0px left128px right128px border1px borderWhite</style>
+        <style target="bodyMask">positionAbsolute height100per width100per backgroundWhite opacity06</style>
+        <style target="footer">width100per height128px</style>
+        <style target="footerInner">width1024px height128px marginHAuto</style>
+        <action call="css">
+            <parameter>bodyInner</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="css">
+            <parameter>bodyInner</parameter>
+            <parameter>height</parameter>
+            <parameter>1px</parameter>
+        </action>
+        <to>Loading</to>
+    </loader>
+    <state id="Loading">
+        <begin call="load" on="Loadable" />
+        <begin call="defineBodyHeight" />
+    </state>
+    <state id="Minimal">
+        <in from="Loading">
+            <target>background</target>
+            <pre call="refresh" on="Enhanceable" />
+            <animation base="FadeIn" />
+        </in>
+        <in from="Loading">
+            <target>bodyInner</target>
+            <animation base="OpenHorizontal" />
+            <queue>
+                <target>bodyInner</target>
+                <animation base="OpenVertical" />
+            </queue>
+        </in>
+    </state>
+</component>
