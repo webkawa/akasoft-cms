@@ -1,20 +1,38 @@
 /* Layout component.
  * Global layout component.                                                     */
 
+
 function LayoutCPN(ctn) {
-    var cpn = new Component(ctn, "build/layout.xml");
+    var c = new Component(ctn, "build/layout.xml");
     
-    cpn.registerMethod(LayoutCPN.prototype.defineBodyHeight, "defineBodyHeight", false);
+    c.registerMethod(LayoutCPN.prototype.init, "init", false);
+    c.registerMethod(LayoutCPN.prototype.defineBodyHeight, "defineBodyHeight", false);
     
-    cpn.saveInterface(LoadableITF);
-    cpn.qc("addTarget@Loadable", "background");
-    cpn.qc("setState@Loadable", "Minimal");
+    c.saveInterface(LoadableITF);
+    c.qc("addTarget@Loadable", "background");
+    c.qc("setState@Loadable", "Minimal");
     
-    cpn.saveInterface(EnhanceableITF);
-    cpn.qc("addForMixedOverflow@Enhanceable", "background");
+    c.saveInterface(EnhanceableITF);
+    c.qc("addForMixedOverflow@Enhanceable", "background");
     
-    return cpn;
+    c.saveInterface(ColumnableITF);
+    c.qc("addStatic@Columnable", "navigationInner");
+    
+    return c;
 }
+LayoutCPN.prototype.init = function() {
+    var t = new TranslatorPI(this.qs("virtuals", "div.translator"));
+    
+    Register.identify(t, "translator");
+    t.start();
+    t.qc("load", "fr", "bundle_fr");
+    t.qc("load", "en", "bundle_en");
+    
+    t.qc("addAlways", "testA", this, "bodyCore", "p:first()");
+    t.qc("addAlways", "testB", this, "bodyCore", "p:last()");
+    
+    t.qc("switch", "fr");
+};
 LayoutCPN.prototype.defineBodyHeight = function() {
     var h = this.qs("$BODY").height() - 
             this.qs("header").outerHeight(true) - 

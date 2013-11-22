@@ -7,6 +7,7 @@
         <script type="text/javascript" src="framework/js/obfw.js"></script>
         <script type="text/javascript" src="framework/js/obitf.js"></script>
         <script type="text/javascript" src="framework/js/obitf.js"></script>
+        <script type="text/javascript" src="framework/js/obpi.js"></script>
         <script type="text/javascript" src="build/obcpn.js"></script>
         <link rel="stylesheet" type="text/css" href="framework/css/styles.css" />
     </head>
@@ -16,12 +17,16 @@
                 try {
                     ErrorManager.addCatalog("framework/xml/errors/core.xml");
                     ErrorManager.addCatalog("framework/xml/errors/configuration.xml");
+                    ErrorManager.addCatalog("framework/xml/errors/interfaces.xml");
                     ErrorManager.addCatalog("framework/xml/errors/component.xml");
                     ErrorManager.addCatalog("framework/xml/errors/log.xml");
+                    ErrorManager.addCatalog("framework/xml/errors/plugins.xml");
                     ErrorManager.addCatalog("framework/xml/errors/workflow.xml");
                     
                     CFG.load("framework/xml/configurations/production.xml");
                     CFG.load("framework/xml/configurations/development.xml");
+                    CFG.load("data/lang/fr.xml");
+                    CFG.load("data/lang/en.xml");
                     Log.start();
                     
                     new LayoutCPN($("body")).start();

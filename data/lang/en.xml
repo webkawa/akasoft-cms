@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../../framework/xsd/configurations.xsd" 
+               level="1" >
+    
+    <group id="bundle_en">
+        <string id="testA">testAen</string>
+        <string id="testB">testBen</string>
+    </group>
+    
+</configuration>
