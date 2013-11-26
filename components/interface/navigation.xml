@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="Navigation" 
+         type="classic">
+    <selector id="link">div.link</selector>
+    <selector id="linkBack">div.link > div.back</selector>
+    <selector id="linkFront">div.link > div.front</selector>
+    <selector id="wrapper">div.link > div.wrapper</selector>
+    <selector id="inner">div.link > div.wrapper > div</selector>
+    <selector id="innerLeft">div.link > div.wrapper > div > div.left</selector>
+    <selector id="innerDescription">div.link > div.wrapper > div > div.left > p</selector>
+    <selector id="innerRight">div.link > div.wrapper > div > div.right</selector>
+    <selector id="innerList">div.link > div.wrapper > div > div.right > ul</selector>
+    <selector id="innerListLinks">div.link > div.wrapper > div > div.right > ul > a</selector>
+    <selector id="innerListElements">div.link > div.wrapper > div > div.right > ul > a > li</selector>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>400</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="Open">
+            <speed>200</speed>
+            <easing>easeOutQuart</easing>
+            <move>
+                <property>max-height</property>
+                <from>0%</from>
+                <to>100%</to>
+            </move>
+        </trajectory>
+        <trajectory name="Close">
+            <speed>200</speed>
+            <easing>easeInQuart</easing>
+            <move clean="false">
+                <property>max-height</property>
+                <from>100%</from>
+                <to>0%</to>
+            </move>
+        </trajectory>
+        <trajectory name="Expand">
+            <speed>500</speed>
+            <easing>easeInOutQuart</easing>
+            <move clean="false">
+                <property>height</property>
+                <from>0px</from>
+                <to>260px</to>
+            </move>
+        </trajectory>
+        <trajectory name="Hide">
+            <speed>200</speed>
+            <easing>easeInCubic</easing>
+            <move>
+                <property>height</property>
+                <to>0px</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div class="link">
+                    <div class="back">
+                        <p />
+                    </div>
+                    <div class="front">
+                        <p />
+                    </div>
+                    <div class="wrapper">
+                        <div>
+                            <div class="left">
+                                <p />
+                            </div>
+                            <div class="right">
+                                <ul />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ]]>
+        </dom>
+        <style target="link">spe-border positionRelative width100per height100per borderB4px</style>
+        <style target="linkBack linkFront">positionAbsolute overflowHidden width100per height100per</style>
+        <style target="linkBack linkFront" find="p">size22px textCenter</style>
+        <style target="linkBack">spe-color</style>
+        <style target="linkFront">spe-background bottom0px colorWhite</style>
+        <style target="linkFront" find="p">marginT2px</style>
+        <style target="wrapper">spe-background positionAbsolute height0px overflowHidden</style>
+        <style target="inner">positionAbsolute width100per height100per</style>
+        <style target="inner" find="div.left, div.right">positionAbsolute top16px bottom16px</style>
+        <style target="innerLeft">left0px width40per borderR1px borderWhite</style>
+        <style target="innerDescription">marginH16px size16px colorWhite textRight</style>
+        <style target="innerRight">right0px width60per</style>
+        <style target="innerList">marginH16px size16px</style>
+        <style target="innerListLinks" post="true"></style>
+        <style target="innerListElements" post="true">paddingV4px paddingH8px marginB4px backgroundWhiteHover colorWhite cursorPointer</style>
+        <style target="innerListElements" find="span:first()" post="true">size20px bold</style>
+        <style target="innerListElements" find="span:last()" post="true">size16px marginL4px</style>
+        <action call="realHeight">
+            <parameter>link</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>linkFront</parameter>
+        </action>
+        <action call="css">
+            <parameter>link linkBack</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="css">
+            <parameter>link linkFront</parameter>
+            <parameter>max-height</parameter>
+            <parameter>0%</parameter>
+        </action>
+        <to>Locked</to>
+    </loader>
+    <state id="Locked">
+        <in from="@None">
+            <target>link</target>
+            <animation base="FadeIn" />
+        </in>
+    </state>
+    <state id="Close">
+        <in from="Locked">
+            <target>link</target>
+            <animation base="Open" />
+        </in>
+        <in from="Locked">
+            <target>linkBack</target>
+            <brush target="linkFront linkBack">cursorPointer</brush>
+            <animation base="FadeIn" wait="200" />
+        </in>
+    </state>
+    <state id="Open">
+        <in from="Close">
+            <target>linkFront</target>
+            <animation base="Open" />
+        </in>
+        <in from="Close">
+            <target>wrapper</target>
+            <animation base="Expand" />
+        </in>
+        <out to="Close">
+            <target>linkFront</target>
+            <animation base="Close" />
+        </out>
+        <out to="Close">
+            <target>wrapper</target>
+            <animation base="Hide" />
+        </out>
+    </state>
+</component>

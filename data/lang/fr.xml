@@ -4,8 +4,9 @@
                level="1" >
     
     <group id="bundle_fr">
-        <string id="testA">testA</string>
-        <string id="testB">testB</string>
+        <string id="sample_lorem_short">Lorem ipsum</string>
+        <string id="sample_lorem_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis orci, vulputate quis ultricies congue, rhoncus ut elit. Maecenas at gravida ipsum, ut elementum sem. Maecenas vitae augue tempus, malesuada lacus nec, blandit mauris. Praesent adipiscing eros id justo auctor cursus.</string>
+        <string id="sample_lorem_long"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis orci, vulputate quis ultricies congue, rhoncus ut elit. Maecenas at gravida ipsum, ut elementum sem. Maecenas vitae augue tempus, malesuada lacus nec, blandit mauris. Praesent adipiscing eros id justo auctor cursus. Duis bibendum nisi ac semper tincidunt. Vivamus faucibus enim vel dolor euismod fringilla. Fusce cursus, lacus nec cursus commodo, lectus erat rhoncus dui, at feugiat lorem sapien sit amet nisl. Sed in lobortis enim, quis faucibus dolor. Vestibulum ac suscipit risus, eu bibendum lectus. Curabitur tortor sem, ultricies in arcu ut, commodo ornare lacus. Vivamus dui tortor, scelerisque molestie fringilla vitae, semper vel purus. Mauris hendrerit, quam eu sodales tempor, nibh velit ullamcorper nibh, vel suscipit ligula leo et nunc. Sed et sapien sit amet metus ullamcorper egestas. Praesent fringilla euismod odio eget porta. Etiam malesuada quis lorem vitae ultrices. Mauris sollicitudin ligula sit amet nunc placerat aliquam.</string>
     </group>
     
 </configuration>

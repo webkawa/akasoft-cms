@@ -11,19 +11,25 @@
     <selector id="headerTitleLeft">div.header > div > p:first() > span:first()</selector>
     <selector id="headerTitleRight">div.header > div > p:first() > span:eq(1)</selector>
     <selector id="headerSubtitle">div.header > div > p:first() > span:last()</selector>
-    <selector id="navigation">div.navigation</selector>
-    <selector id="navigationInner">div.navigation > div</selector>
-    <selector id="navigationElements">div.navigation > div > div</selector>
     <selector id="body">div.body</selector>
     <selector id="bodyInner">div.body > div</selector>
     <selector id="bodyLeft">div.body > div > div.left</selector>
     <selector id="bodyCenter">div.body > div > div.center</selector>
     <selector id="bodyMask">div.body > div > div.center > div.mask</selector>
+    <selector id="bodyNavigation">div.body > div > div.center > div.navigation</selector>
+    <selector id="bodyNavigationLinks">div.body > div > div.center > div.navigation > div</selector>
     <selector id="bodyCore">div.body > div > div.center > div.core</selector>
     <selector id="bodyRight">div.body > div > div.right</selector>
     <selector id="footer">div.footer</selector>
     <selector id="footerInner">div.footer > div</selector>
     <selector id="virtuals">div.virtuals</selector>
+    <selector id="links" explore="true">a</selector>
+    <master bind="click" prevent="true" transfer="false">
+        <target refresh="true">links</target>
+        <action call="log">
+            <parameter>test</parameter>
+        </action>
+    </master>
     <trajectories>
         <trajectory name="FadeIn">
             <speed>1200</speed>
@@ -38,11 +44,6 @@
             <speed>1200</speed>
             <easing>easeInQuart</easing>
             <move>
-                <property>opacity</property>
-                <from>0</from>
-                <to>1</to>
-            </move>
-            <move>
                 <property>width</property>
                 <from>0px</from>
                 <to>1280px</to>
@@ -53,11 +54,33 @@
             <easing>easeOutQuart</easing>
             <move clean="false">
                 <property>height</property>
-                <from>0px</from>
+                <from>1px</from>
                 <goal call="get">
                     <parameter>body_height</parameter>
                 </goal>
                 <to>640px</to>
+            </move>
+        </trajectory>
+        <trajectory name="ShowNavigation">
+            <speed>500</speed>
+            <easing>easeOutCubic</easing>
+            <move>
+                <property>width</property>
+                <from>0%</from>
+                <to>100%</to>
+            </move>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>0.6</to>
+            </move>
+        </trajectory>
+        <trajectory name="PushNavigation">
+            <speed>1000</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <to>1</to>
             </move>
         </trajectory>
     </trajectories>
@@ -74,21 +97,12 @@
     <loader>
         <dom>
             <![CDATA[
-                <img src="data/img/background.jpg" />
+                <img src="data/img/backgroundgrey.jpg" />
                 <div class="header">
                     <div>
                         <p>
-                            <span>Aka</span><span>soft</span><span>CMS</span>
+                            <span>Aka</span><span>soft</span><span>Content Management System</span>
                         </p>
-                    </div>
-                </div>
-                <div class="navigation">
-                    <div>
-                        <div />
-                        <div />
-                        <div />
-                        <div />
-                        <div />
                     </div>
                 </div>
                 <div class="body">
@@ -96,6 +110,13 @@
                         <div class="left" />
                         <div class="center">
                             <div class="mask" />
+                            <div class="navigation">
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                                <div />
+                            </div>
                             <div class="core">
                                 <p />
                                 <p />
@@ -107,6 +128,7 @@
                 <div class="footer" />
                 <div class="virtuals">
                     <div class="translator" />
+                    <div class="palette" />
                 </div>
             ]]>
         </dom>
@@ -118,9 +140,6 @@
         <style target="headerTitle">size64px fontArial spacing2px</style>
         <style target="headerTitleLeft">colorBlack backgroundWhite radius8px padding2px</style>
         <style target="headerSubtitle">size32px italic marginL8px fontTimes</style>
-        <style target="navigation">width100per height64px</style>
-        <style target="navigationInner">width1024px height64px marginHAuto</style>
-        <style target="navigationElements">height64px</style>
         <style target="body">positionRelative width100per</style>
         <style target="bodyInner">positionRelative width1280px marginHAuto</style>
         <style target="bodyLeft bodyRight">positionAbsolute top0px bottom0px width128px</style>
@@ -128,9 +147,11 @@
         <style target="bodyRight">right0px</style>
         <style target="bodyCenter">positionAbsolute top0px bottom0px left128px right128px border1px borderWhite</style>
         <style target="bodyMask">positionAbsolute height100per width100per backgroundWhite opacity06</style>
+        <style target="bodyNavigation">positionRelative width100per height32px backgroundWhite marginT16px</style>
+        <style target="bodyNavigationLinks">height32px</style>
         <style target="bodyCore">positionRelative</style>
-        <style target="footer">width100per height128px</style>
-        <style target="footerInner">width1024px height128px marginHAuto</style>
+        <style target="footer">width100per height64px</style>
+        <style target="footerInner">width1024px height64px marginHAuto</style>
         <action call="css">
             <parameter>headerText bodyInner</parameter>
             <parameter>opacity</parameter>
@@ -141,7 +162,11 @@
             <parameter>height</parameter>
             <parameter>1px</parameter>
         </action>
-        <action call="refresh" on="Columnable" />
+        <action call="css">
+            <parameter>bodyNavigation</parameter>
+            <parameter>width</parameter>
+            <parameter>0%</parameter>
+        </action>
         <to>Loading</to>
     </loader>
     <state id="Loading">
@@ -156,10 +181,21 @@
         </in>
         <in from="Loading">
             <target>bodyInner</target>
+            <animation base="FadeIn">
+                <easing>easeOutQuart</easing>
+            </animation>
             <animation base="OpenHorizontal" />
             <queue>
                 <target>bodyInner</target>
                 <animation base="OpenVertical" />
+            </queue>
+            <queue>
+                <target>bodyNavigation</target>
+                <animation base="ShowNavigation" wait="500" />
+                <post call="refresh" on="Columnable" />
+                <post call="sourceGet">
+                    <parameter>navigation</parameter>
+                </post>
             </queue>
         </in>
         <in from="Loading">
@@ -167,6 +203,28 @@
             <target>headerTitleRight</target>
             <target>headerSubtitle</target>
             <animation base="FadeIn" wait="200" cascade="200" />
+        </in>
+        <begin call="go">
+            <parameter>Normal</parameter>
+        </begin>
+    </state>
+    <state id="Normal">
+        <master bind="mouseenter">
+            <target>bodyNavigationLinks</target>
+            <action call="go" context="distant">
+                <parameter>Open</parameter>
+            </action>
+        </master>
+        <master bind="mouseleave">
+            <target>bodyNavigationLinks</target>
+            <action call="go" context="distant">
+                <parameter>Close</parameter>
+            </action>
+        </master>
+        <in from="Minimal">
+            <target>bodyNavigation</target>
+            <pre call="startNavigation" />
+            <animation base="PushNavigation" />
         </in>
     </state>
 </component>

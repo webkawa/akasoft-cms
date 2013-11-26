@@ -1,0 +1,79 @@
+/* General */
+body {
+    font-family: Times New Roman;
+}
+
+/* Specific */
+.cpnNavigation > div.link > div.wrapper {
+    z-index: 1;
+}
+.cpnNavigation.toOpen:hover > div.link > div.wrapper {
+    z-index: 2;
+}
+
+/* Color */
+.speColorBlue, .speColorBlue a {
+    color: #3a73ad;
+}
+.speColorGreen, .speColorGreen a {
+    color: #6ba71c;
+}
+.speColorOrange, .speColorOrange a {
+    color: #f59600;
+}
+.speColorRed, .speColorRed a {
+    color: #d32600;
+}
+.speColorGrey, .speColorGrey a {
+    color: #888;
+}
+/* Color (hover) */
+.speColorHoverBlue:hover, .speColorHoverBlue:hover a {
+    color: #3a73ad;
+}
+.speColorHoverGreen:hover, .speColorHoverGreen:hover a {
+    color: #6ba71c;
+}
+.speColorHoverOrange:hover, .speColorHoverOrange:hover a {
+    color: #f59600;
+}
+.speColorHoverRed:hover, .speColorHoverRed:hover a {
+    color: #d32600;
+}
+.speColorHoverGrey:hover, .speColorHoverGrey:hover a {
+    color: #888;
+}
+    
+/* Background */
+.speBackgroundBlue {
+    background-color: #3a73ad;
+}
+.speBackgroundGreen {
+    background-color: #6ba71c;
+}
+.speBackgroundOrange {
+    background-color: #f59600;
+}
+.speBackgroundRed {
+    background-color: #d32600;
+}
+.speBackgroundGrey {
+    background-color: #888;
+}
+
+/* Border */
+.speBorderBlue {
+    border-color: #3a73ad;
+}
+.speBorderGreen {
+    border-color: #6ba71c;
+}
+.speBorderOrange {
+    border-color: #f59600;
+}
+.speBorderRed {
+    border-color: #d32600;
+}
+.speBorderGrey {
+    border-color: #888;
+}
