@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="Error" 
+         type="classic">
+    <selector id="wrapper">div</selector>
+    <selector id="left">div > div:first()</selector>
+    <selector id="title">div > div:first() > p</selector>
+    <selector id="right">div > div:last()</selector>
+    <selector id="subtitle">div > div:last() > p:first()</selector>
+    <selector id="button">div > div:last() > p:last()</selector>
+    <selector id="label">div > div:last() > p:last() > span</selector>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <easing>swing</easing>
+            <speed>600</speed>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="FadeOut">
+            <easing>swing</easing>
+            <speed>600</speed>
+            <move>
+                <property>opacity</property>
+                <from>1</from>
+                <to>0</to>
+            </move>
+        </trajectory>
+        <trajectory name="Open">
+            <easing>easeInOutQuint</easing>
+            <speed>600</speed>
+            <move clean="false">
+                <property>margin-left</property>
+                <from>-100%</from>
+                <to>0%</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            
+            <![CDATA[
+                <div>
+                    <div>
+                        <p />
+                    </div>
+                    <div>
+                        <p />
+                        <p>
+                            <span />
+                        </p>
+                    </div>
+                </div>
+            ]]>
+        </dom>
+        <style target="wrapper">width640px height128px marginHAuto</style>
+        <style target="left">borderR1px borderWhite</style>
+        <style target="title">textRight marginR16px spacingM4px colorWhite fontArial bolder</style>
+        <style target="right">overflowHidden</style>
+        <style target="subtitle">marginT8px paddingL16px colorWhite size32px marginB8px italic</style>
+        <style target="button">marginT8px marginB8px paddingL16px</style>
+        <style target="label">spe-background spe-backgroundHover-clear colorWhite size20px bold paddingV4px paddingH8px radius4px cursorPointer</style>
+        <action call="css">
+            <parameter>subtitle button</parameter>
+            <parameter>margin-left</parameter>
+            <parameter>-100%</parameter>
+        </action>
+        <action call="refresh" on="Columnable" />
+        <action call="maximizeFS">
+            <parameter>title</parameter>
+        </action>
+        <action call="centerY">
+            <parameter>wrapper</parameter>
+        </action>
+        <to>Ready</to>
+    </loader>
+    <state id="Ready">
+        <trigger bind="click">
+            <target>button</target>
+            <action call="goBack" on="Navigable" parent="1" />
+        </trigger>
+        <in from="@None">
+            <target>left</target>
+            <animation base="FadeIn" /> 
+            <queue>
+                <target>subtitle</target>
+                <target>button</target>
+                <animation base="Open" cascade="200" />
+            </queue>
+        </in>
+    </state>
+</component>

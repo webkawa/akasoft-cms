@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="FootLink" 
+         type="classic">
+    <selector id="mask">div:first()</selector>
+    <selector id="wrapper">div:last()</selector>
+    <selector id="text">div:last() > p</selector>
+    <selector id="label">div:last() > p:first()</selector>
+    <selector id="description">div:last() > p:last()</selector>
+    <trajectories>
+        <trajectory name="MaskOpen">
+            <speed>200</speed>
+            <easing>easeInOutCubic</easing>
+            <move clean="false">
+                <property>opacity</property>
+                <from>0</from>
+                <to>0.2</to>
+            </move>
+            <move clean="false">
+                <property>height</property>
+                <from>0%</from>
+                <to>100%</to>
+            </move>
+        </trajectory>
+        <trajectory name="MaskClose">
+            <speed>200</speed>
+            <easing>easeInOutCubic</easing>
+            <move>
+                <property>opacity</property>
+                <to>0</to>
+            </move>
+            <move>
+                <property>height</property>
+                <to>0%</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            
+            <![CDATA[
+                <div />
+                <div>
+                    <p />
+                    <p />
+                </div>
+            ]]>
+        </dom>
+        <style target="$SELF">positionRelative cursorPointer</style>
+        <style target="mask">positionAbsolute width100per height0per backgroundWhite</style>
+        <style target="wrapper">positionRelative width100per</style>
+        <style target="text">marginH2px colorWhite textCenter</style>
+        <style target="label">bold</style>
+        <style target="description"></style>
+        <action call="centerY">
+            <parameter>wrapper</parameter>
+        </action>
+        <to>Ready</to>
+    </loader>
+    <state id="Ready" />
+    <state id="Hover">
+        <trigger bind="click">
+            <target>$SELF</target>
+            <action call="to" parent="1">
+                <parameter variable="true">link</parameter>
+            </action>
+        </trigger>
+        <in from="Ready">
+            <target>mask</target>
+            <pre call="retrigger" />
+            <animation base="MaskOpen" />
+        </in>
+        <out to="Ready">
+            <target>mask</target>
+            <pre call="css">
+                <parameter>mask</parameter>
+                <parameter>bottom</parameter>
+                <parameter>0px</parameter>
+            </pre>
+            <animation base="MaskClose" />
+            <post call="clean">
+                <parameter>mask</parameter>
+                <parameter>bottom</parameter>
+            </post>
+        </out>
+    </state>
+</component>

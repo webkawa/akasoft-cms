@@ -96,7 +96,6 @@
         <style target="innerDescription">marginH16px size16px colorWhite textRight</style>
         <style target="innerRight">right0px width60per</style>
         <style target="innerList">marginH16px size16px</style>
-        <style target="innerListLinks" post="true"></style>
         <style target="innerListElements" post="true">paddingV4px paddingH8px marginB4px backgroundWhiteHover colorWhite cursorPointer</style>
         <style target="innerListElements" find="span:first()" post="true">size20px bold</style>
         <style target="innerListElements" find="span:last()" post="true">size16px marginL4px</style>
@@ -136,12 +135,26 @@
         </in>
     </state>
     <state id="Open">
+        <trigger bind="click">
+            <target>linkFront</target>
+            <target>innerListElements</target>
+            <action call="go">
+                <parameter>Close</parameter>
+            </action>
+        </trigger>
+        <trigger bind="click">
+            <target>linkFront</target>
+            <action call="to" parent="1">
+                <parameter variable="true">link</parameter>
+            </action>
+        </trigger>
         <in from="Close">
             <target>linkFront</target>
             <animation base="Open" />
         </in>
         <in from="Close">
             <target>wrapper</target>
+            <pre call="retrigger" />
             <animation base="Expand" />
         </in>
         <out to="Close">

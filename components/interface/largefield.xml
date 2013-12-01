@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="LargeField" 
+         type="classic">
+    <selector id="wrapper">div</selector>
+    <selector id="left">div > div.left</selector>
+    <selector id="label">div > div.left > p</selector>
+    <selector id="right">div > div.right</selector>
+    <selector id="mask">div > div.right > div:first()</selector>
+    <selector id="inner">div > div.right > div:last()</selector>
+    <selector id="description">div > div.right > div > p.description</selector>
+    <selector id="input">div > div.right > div > input</selector>
+    <selector id="message">div > div.right > div > p.message</selector>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>400</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="Open">
+            <speed>800</speed>
+            <easing>easeOutQuint</easing>
+            <move>
+                <property>margin-left</property>
+                <from>-100%</from>
+                <to>0%</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div>
+                    <div class="left">
+                        <p />
+                    </div>
+                    <div class="right">
+                        <div />
+                        <div>
+                            <p class="description" />
+                            <input />
+                            <p class="message" />
+                        <div />
+                    </div>
+                </div>
+            ]]>
+        </dom>
+        <style target="wrapper">width100per</style>
+        <style target="left">paddingH16px</style>
+        <style target="label">bold textRight colorWhite fontArial spacingM2px</style>
+        <style target="right">positionRelative overflowHidden paddingR8px</style>     
+        <style target="right" find="p, input">positionRelative marginH16px</style>     
+        <style target="inner">width100per paddingV12px</style>
+        <style target="mask">positionAbsolute width100per backgroundWhite opacity05</style>
+        <style target="description">marginB4px color555 size24px</style>
+        <style target="input">height32px size20px fontArial paddingL8px borderBBB border1px</style>   
+        <style target="message"></style>
+        <action call="css">
+            <parameter>mask</parameter>
+            <parameter>border-radius</parameter>
+            <parameter>0px 8px 8px 0px</parameter>
+        </action>
+        <action call="css">
+            <parameter>wrapper</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="refresh" on="Columnable" />
+        <action call="realWidth">
+            <parameter>input</parameter>
+        </action>
+        <action call="realHeight">
+            <parameter>mask</parameter>
+        </action>
+        <action call="maximizeFS">
+            <parameter>label</parameter>
+        </action>
+        <action call="css">
+            <parameter>inner</parameter>
+            <parameter>margin-left</parameter>
+            <parameter>-100%</parameter>
+        </action>
+        <to>Hidden</to>
+    </loader>
+    <state id="Hidden" />
+    <state id="Ready">
+        <in from="@None Hidden">
+            <target>wrapper</target>
+            <animation base="FadeIn" />
+            <queue>
+                <target>inner</target>
+                <animation base="Open" />
+            </queue>
+        </in>
+    </state>
+</component>

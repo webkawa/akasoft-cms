@@ -60,6 +60,22 @@ body {
 .speBackgroundGrey {
     background-color: #888;
 }
+/* Background (hover) */
+.speBackgroundHoverBlueClear:hover {
+    background-color: #5b9adb;
+}
+.speBackgroundHoverGreenClear:hover {
+    background-color: #86cb2c;
+}
+.speBackgroundHoverOrangeClear:hover {
+    background-color: #f5b900;
+}
+.speBackgroundHoverRedClear:hover {
+    background-color: #f64117;
+}
+.speBackgroundHoverGreyClear:hover {
+    background-color: #AAA;
+}
 
 /* Border */
 .speBorderBlue {

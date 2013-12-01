@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../framework/xsd/components.xsd"
+         name="Login" 
+         type="classic">
+    <selector id="wrapper">div</selector>
+    <selector id="left">div > div.left</selector>
+    <selector id="leftHeader">div > div.left > div.header</selector>
+    <selector id="leftTitle">div > div.left > div.header > div:last() > h1</selector>
+    <selector id="leftDescription">div > div.left > div.header > div:last() > p</selector>
+    <selector id="leftButtons">div > div.left > div.footer > p</selector>
+    <selector id="right">div > div.right</selector>
+    <selector id="rightHeader">div > div.right > div.header</selector>
+    <selector id="rightTitle">div > div.right > div.header > div:last() > h1</selector>
+    <selector id="rightDescription">div > div.right > div.header > div:last() > p</selector>
+    <selector id="rightButtons">div > div.right > div.footer > p</selector>
+    <selector id="login">div > div.left > div.login</selector>
+    <selector id="password">div > div.left > div.password</selector>
+    <selector id="recovery">div > div.right > div.recovery</selector>
+    <selector id="lost">div > div.left > div.footer > p > span:first()</selector>
+    <selector id="validate">div > div.left > div.footer > p > span:last()</selector>
+    <selector id="return">div > div.right > div.footer > p > span:first()</selector>
+    <selector id="launch">div > div.right > div.footer > p > span:last()</selector>
+    <trigger bind="click">
+        <target>lost</target>
+        <action call="go">
+            <parameter>Right</parameter>
+        </action>
+    </trigger>
+    <trigger bind="click">
+        <target>return</target>
+        <action call="go">
+            <parameter>Left</parameter>
+        </action>
+    </trigger>
+    <trajectories>
+        <trajectory name="FadeIn">
+            <speed>400</speed>
+            <easing>swing</easing>
+            <move>
+                <property>opacity</property>
+                <from>0</from>
+                <to>1</to>
+            </move>
+        </trajectory>
+        <trajectory name="SwitchRight">
+            <speed>800</speed>
+            <easing>easeOutQuint</easing>
+            <move clean="false">
+                <property>margin-left</property>
+                <from>0%</from>
+                <to>-100%</to>
+            </move>
+        </trajectory>
+        <trajectory name="SwitchLeft">
+            <speed>800</speed>
+            <easing>easeOutQuint</easing>
+            <move>
+                <property>margin-left</property>
+                <from>-100%</from>
+                <to>0%</to>
+            </move>
+        </trajectory>
+    </trajectories>
+    <loader>
+        <dom>
+            <![CDATA[
+                <div>
+                    <div class="left">
+                        <div class="header">
+                            <div />
+                            <div>
+                                <h1 class="bundle-login_left_title spe-color" />
+                                <p class="bundle-login_left_description" />
+                            </div>
+                        </div>
+                        <div class="login" />
+                        <div class="password" />
+                        <div class="footer">
+                            <p>
+                                <span class="bundle-login_lost" />
+                                <span class="bundle-login_validate" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="header">
+                            <div />
+                            <div>
+                                <h1 class="bundle-login_right_title spe-color" />
+                                <p class="bundle-login_right_description" />
+                            </div>
+                        </div>
+                        <div class="recovery" />
+                        <div class="footer">
+                            <p>
+                                <span class="bundle-login_return" />
+                                <span class="bundle-login_launch" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ]]>
+        </dom>
+        <style target="wrapper">width200per height100per</style>
+        <style target="left">width50per floatLeft</style>
+        <style target="right">width50per floatLeft</style>
+        <style target="left right" find="div">width90per marginB16px marginHAuto</style>
+        <style target="leftTitle rightTitle">size48px bolder</style>
+        <style target="leftDescription rightDescription">size24px color444</style>
+        <style target="leftButtons rightButtons">textRight</style>
+        <style target="leftButtons rightButtons" find="span">size24px radius4px paddingH8px paddingV4px colorWhite bold cursorPointer</style>
+        <style target="lost return">background444 background666Hover marginR8px</style>
+        <style target="validate launch">textRight spe-background spe-backgroundHover-clear</style>
+        <action call="css">
+            <parameter>leftTitle leftDescription lost validate</parameter>
+            <parameter>opacity</parameter>
+            <parameter>0</parameter>
+        </action>
+        <action call="refresh" on="Columnable" />
+        <to>Left</to>
+    </loader>
+    <state id="Left" expect="children">
+        <in from="@None">
+            <pre call="refresh" on="Standardizable" />
+            <pre call="centerY">
+                <parameter>left right</parameter>
+            </pre>
+            <pre call="go" reference="recovery">
+                <parameter>Ready</parameter>
+            </pre>
+            <target>leftTitle</target>
+            <target>leftDescription</target>
+            <animation base="FadeIn" cascade="200" />
+            <queue>
+                <pre call="go" reference="login">
+                    <parameter>Ready</parameter>
+                </pre>
+                <pre call="go" reference="password" delay="200">
+                    <parameter>Ready</parameter>
+                </pre>
+                <target>lost</target>
+                <target>validate</target>
+                <animation base="FadeIn" cascade="200" wait="400" />
+            </queue>
+        </in>
+        <in from="Right">
+            <target>wrapper</target>
+            <animation base="SwitchLeft" />
+        </in>
+    </state>
+    <state id="Right">
+        <in from="Left">
+            <target>wrapper</target>
+            <animation base="SwitchRight" />
+        </in>
+    </state>
+</component>

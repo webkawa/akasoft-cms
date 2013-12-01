@@ -22,13 +22,14 @@
     <selector id="bodyRight">div.body > div > div.right</selector>
     <selector id="footer">div.footer</selector>
     <selector id="footerInner">div.footer > div</selector>
+    <selector id="footerInnerElements">div.footer > div > div</selector>
+    <selector id="footerInnerComment">div.footer > div > div:first() > p</selector>
+    <selector id="footerInnerLinks">div.footer > div > div:not(:first())</selector>
     <selector id="virtuals">div.virtuals</selector>
     <selector id="links" explore="true">a</selector>
     <master bind="click" prevent="true" transfer="false">
         <target refresh="true">links</target>
-        <action call="log">
-            <parameter>test</parameter>
-        </action>
+        <action call="to" />
     </master>
     <trajectories>
         <trajectory name="FadeIn">
@@ -84,6 +85,18 @@
             </move>
         </trajectory>
     </trajectories>
+    <master bind="mouseenter">
+        <target>footerInnerLinks</target>
+        <action call="go" context="distant">
+            <parameter>Hover</parameter>
+        </action>
+    </master>
+    <master bind="mouseleave">
+        <target>footerInnerLinks</target>
+        <action call="go" context="distant">
+            <parameter>Ready</parameter>
+        </action>
+    </master>
     <trigger bind="resize">
         <target>$WINDOW</target>
         <action call="refresh" on="Enhanceable" />
@@ -125,7 +138,16 @@
                         <div class="right" />
                     </div>
                 </div>
-                <div class="footer" />
+                <div class="footer">
+                    <div>
+                        <div>
+                            <p class="bundle-sample_lorem_medium" />
+                        </div>
+                        <div />
+                        <div />
+                        <div />
+                    </div>
+                </div>
                 <div class="virtuals">
                     <div class="translator" />
                     <div class="palette" />
@@ -138,7 +160,7 @@
         <style target="headerInner" find="p">colorWhite</style>
         <style target="headerText">displayInline marginT8px</style>
         <style target="headerTitle">size64px fontArial spacing2px</style>
-        <style target="headerTitleLeft">colorBlack backgroundWhite radius8px padding2px</style>
+        <style target="headerTitleLeft">bold colorBlack backgroundWhite radius8px padding2px</style>
         <style target="headerSubtitle">size32px italic marginL8px fontTimes</style>
         <style target="body">positionRelative width100per</style>
         <style target="bodyInner">positionRelative width1280px marginHAuto</style>
@@ -149,11 +171,13 @@
         <style target="bodyMask">positionAbsolute height100per width100per backgroundWhite opacity06</style>
         <style target="bodyNavigation">positionRelative width100per height32px backgroundWhite marginT16px</style>
         <style target="bodyNavigationLinks">height32px</style>
-        <style target="bodyCore">positionRelative</style>
+        <style target="bodyCore">positionAbsolute overflowHidden bottom0px left0px right0px</style>
         <style target="footer">width100per height64px</style>
-        <style target="footerInner">width1024px height64px marginHAuto</style>
+        <style target="footerInner">positionRelative width1024px height64px marginHAuto paddingV8px</style>
+        <style target="footerInnerElements">borderWhite</style>
+        <style target="footerInnerComment" post="true">marginH16px colorWhite italic size14px textRight</style>
         <action call="css">
-            <parameter>headerText bodyInner</parameter>
+            <parameter>headerText bodyInner footerInnerElements</parameter>
             <parameter>opacity</parameter>
             <parameter>0</parameter>
         </action>
@@ -166,6 +190,11 @@
             <parameter>bodyNavigation</parameter>
             <parameter>width</parameter>
             <parameter>0%</parameter>
+        </action>
+        <action call="css">
+            <parameter>bodyCore</parameter>
+            <parameter>top</parameter>
+            <parameter>48px</parameter>
         </action>
         <to>Loading</to>
     </loader>
@@ -185,17 +214,35 @@
                 <easing>easeOutQuart</easing>
             </animation>
             <animation base="OpenHorizontal" />
+            <post call="realHeight">
+                <parameter>footerInner</parameter>
+            </post>
+            <post call="refresh" on="Columnable">
+                <parameter>footerInner</parameter>
+            </post>
+            <post call="buildFooter" />
+            <post call="maximizeLH">
+                <parameter>footerInnerComment</parameter>
+            </post>
+            <queue>
+                <target>footerInnerElements</target>
+                <pre call="retrigger" />
+                <animation base="FadeIn" cascade="200" />
+            </queue>
             <queue>
                 <target>bodyInner</target>
                 <animation base="OpenVertical" />
-            </queue>
-            <queue>
-                <target>bodyNavigation</target>
-                <animation base="ShowNavigation" wait="500" />
                 <post call="refresh" on="Columnable" />
-                <post call="sourceGet">
-                    <parameter>navigation</parameter>
-                </post>
+                <queue>
+                    <target>bodyNavigation</target>
+                    <animation base="ShowNavigation" />
+                    <post call="refresh" on="Columnable">
+                        <parameter>bodyNavigation</parameter>
+                    </post>
+                    <post call="sourceGet">
+                        <parameter>navigation</parameter>
+                    </post>
+                </queue>
             </queue>
         </in>
         <in from="Loading">
@@ -204,9 +251,12 @@
             <target>headerSubtitle</target>
             <animation base="FadeIn" wait="200" cascade="200" />
         </in>
-        <begin call="go">
-            <parameter>Normal</parameter>
+        <begin call="go" on="Navigable">
+            <parameter>login</parameter>
         </begin>
+        <out to="Normal">
+            <post call="startNavigation"></post>
+        </out>
     </state>
     <state id="Normal">
         <master bind="mouseenter">

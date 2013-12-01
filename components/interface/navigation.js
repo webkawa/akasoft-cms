@@ -12,6 +12,7 @@ function NavigationCPN(ctn, source) {
     c.registerMethod(NavigationCPN.prototype.wrapperWidth, "wrapperWidth", false);
     
     c.register("source", source);
+    c.register("link", $(this.source).children("i.link").text());
     
     return c;
 }
@@ -32,7 +33,7 @@ NavigationCPN.prototype.init = function() {
                     '</a>';
         ctx.qs("innerList").append(buff);
     });
-    Register.getByName("translator").qc("build", true, this.container);
+    Register.getByName("translator").qc("qb", this);
     
     // Colorizing
     var color = $(this.source).children("i.color").text();
