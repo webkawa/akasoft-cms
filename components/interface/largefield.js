@@ -17,10 +17,15 @@ function LargeFieldCPN(ctn, label, description) {
         lastexcept: "borderR1px borderWhite"
     }, [1, 4], true);
     
+    c.saveInterface(InputableITF);
+    
     return c;
 }
 LargeFieldCPN.prototype.init = function() {
     this.qs("label").addClass("bundle-" + this.label);
     this.qs("description").addClass("bundle-" + this.description);
     Register.getByName("translator").qc("qb", this);
+};
+LargeFieldCPN.prototype.push = function() {
+    this.qc("submit@Inputable", this.qs("input").val());
 };

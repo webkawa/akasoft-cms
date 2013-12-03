@@ -9,9 +9,7 @@ function LayoutCPN(ctn) {
     c.registerMethod(LayoutCPN.prototype.buildFooter, "buildFooter", false);
     c.registerMethod(LayoutCPN.prototype.buildNavigation, "buildNavigation", false);
     c.registerMethod(LayoutCPN.prototype.startNavigation, "startNavigation", false);
-    c.registerMethod(LayoutCPN.prototype.to, "to", false);
-    c.registerMethod(LayoutCPN.prototype.toLogin, "toLogin", false);
-    c.registerMethod(LayoutCPN.prototype.to404, "to404", false);
+    c.registerMethod(LayoutCPN.prototype.lockNavigation, "lockNavigation", false);
     
     c.registerSource("navigation", "data/content/navigation.xml", "Minimal", [
         {method: "buildNavigation"}
@@ -29,10 +27,6 @@ function LayoutCPN(ctn) {
     c.qc("addStatic@Columnable", "footerInner", {
         lastexcept: "borderR1px"
     }, [7, 1, 1, 1], false);
-    
-    c.saveInterface(NavigableITF);
-    c.qc("addCaseEquals@Navigable", "login", "toLogin");
-    c.qc("defineDefault@Navigable", "to404");
     
     return c;
 }
@@ -52,6 +46,9 @@ LayoutCPN.prototype.init = function() {
     p.start();
     p.qc("switch", "blue", true);
     Register.identify(p, "palette");
+    
+    /* Subcomponents */
+    this.register("page", new PageCPN(this.qs("bodyCore")));
 };
 
 LayoutCPN.prototype.defineBodyHeight = function() {
@@ -82,6 +79,19 @@ LayoutCPN.prototype.startNavigation = function() {
         }, 150 * i);
     });
 };
+LayoutCPN.prototype.lockNavigation = function() {
+    var ctx = this;
+    this.qs("bodyNavigationLinks").each(function(i) {
+        var n = this;
+        setTimeout(function() {
+            try {
+                Register.getFrom(n).qc("go", "Locked");
+            } catch (e) {
+                ErrorManager.process(e);
+            }
+        }, 150 * i);
+    });
+};
 LayoutCPN.prototype.buildFooter = function() {
     new FootLinkCPN(this.qs("footerInnerLinks").eq(0), {
         link: "x",
@@ -100,17 +110,4 @@ LayoutCPN.prototype.buildFooter = function() {
         label: "bundle-sample_lorem_short",
         description: "bundle-sample_lorem_short"
     }).start();
-};
-LayoutCPN.prototype.to = function(page) {
-    if (Toolkit.isNull(page)) {
-        this.qc("go@Navigable", Toolkit.replaceAll(this.qs("$TRIGGERED").attr("href"), "#", ""));
-    } else {
-        this.qc("go@Navigable", page);
-    }
-};
-LayoutCPN.prototype.toLogin = function() {
-    new LoginCPN(this.qs("bodyCore")).start();
-};
-LayoutCPN.prototype.to404 = function() {
-    new ErrorCPN(this.qs("bodyCore"), "404").start();
 };

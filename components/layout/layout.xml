@@ -26,11 +26,6 @@
     <selector id="footerInnerComment">div.footer > div > div:first() > p</selector>
     <selector id="footerInnerLinks">div.footer > div > div:not(:first())</selector>
     <selector id="virtuals">div.virtuals</selector>
-    <selector id="links" explore="true">a</selector>
-    <master bind="click" prevent="true" transfer="false">
-        <target refresh="true">links</target>
-        <action call="to" />
-    </master>
     <trajectories>
         <trajectory name="FadeIn">
             <speed>1200</speed>
@@ -251,9 +246,6 @@
             <target>headerSubtitle</target>
             <animation base="FadeIn" wait="200" cascade="200" />
         </in>
-        <begin call="go" on="Navigable">
-            <parameter>login</parameter>
-        </begin>
         <out to="Normal">
             <post call="startNavigation"></post>
         </out>

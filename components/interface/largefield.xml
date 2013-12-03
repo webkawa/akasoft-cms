@@ -89,6 +89,10 @@
     </loader>
     <state id="Hidden" />
     <state id="Ready">
+        <trigger bind="blur">
+            <target>input</target>
+            <action call="push" />
+        </trigger>
         <in from="@None Hidden">
             <target>wrapper</target>
             <animation base="FadeIn" />
