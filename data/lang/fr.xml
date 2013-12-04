@@ -7,23 +7,12 @@
         <string id="sample_lorem_short">Lorem ipsum</string>
         <string id="sample_lorem_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis orci, vulputate quis ultricies congue, rhoncus ut elit. Maecenas at gravida ipsum, ut elementum sem. Maecenas vitae augue tempus, malesuada lacus nec, blandit mauris. Praesent adipiscing eros id justo auctor cursus.</string>
         <string id="sample_lorem_long"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis orci, vulputate quis ultricies congue, rhoncus ut elit. Maecenas at gravida ipsum, ut elementum sem. Maecenas vitae augue tempus, malesuada lacus nec, blandit mauris. Praesent adipiscing eros id justo auctor cursus. Duis bibendum nisi ac semper tincidunt. Vivamus faucibus enim vel dolor euismod fringilla. Fusce cursus, lacus nec cursus commodo, lectus erat rhoncus dui, at feugiat lorem sapien sit amet nisl. Sed in lobortis enim, quis faucibus dolor. Vestibulum ac suscipit risus, eu bibendum lectus. Curabitur tortor sem, ultricies in arcu ut, commodo ornare lacus. Vivamus dui tortor, scelerisque molestie fringilla vitae, semper vel purus. Mauris hendrerit, quam eu sodales tempor, nibh velit ullamcorper nibh, vel suscipit ligula leo et nunc. Sed et sapien sit amet metus ullamcorper egestas. Praesent fringilla euismod odio eget porta. Etiam malesuada quis lorem vitae ultrices. Mauris sollicitudin ligula sit amet nunc placerat aliquam.</string>
-        <string id="login_left_title">Connexion</string>
-        <string id="login_left_description">Bienvenue sur Akasoft CMS. Pour accéder à votre espace utilisateur, merci de renseigner vos identifiants.</string>
-        <string id="login_right_title">Identifiants égarés</string>
-        <string id="login_right_description">Pour restaurer votre mot de passe, merci d'indiquer ci-dessous votre nom d'utilisateur ou votre adresse de messagerie. Vous recevrez par e-mail vos nouveaux identifiants.</string>
-        <string id="login_login_label">Login</string>
-        <string id="login_login_description">Entrez votre nom d'utilisateur</string>
-        <string id="login_password_label">Mot de passe</string>
-        <string id="login_password_description">Entrez votre mot de passe utilisateur</string>
-        <string id="login_recovery_label">Login ou e-mail</string>
-        <string id="login_recovery_description">Entrez votre nom d'utilisateur ou votre adresse de messagerie</string>
-        <string id="login_lost">Identifiants égarés</string>
-        <string id="login_validate">Connexion</string>
-        <string id="login_return">Retour</string>
-        <string id="login_launch">Exécuter</string>
-        <string id="404_title">404</string>
-        <string id="404_subtitle">La page demandée n'existe pas</string>
-        <string id="404_back">Page précédente</string>
+        <string id="error_title">Erreur</string>
+        <string id="error_back">Retour à la page précédente</string>
+        <string id="error_404_label">La page ou la fonctionnalité demandée n'existent pas.</string>
+        <string id="error_404_description">Merci de retenter ultérieurement.</string>
+        <string id="error_500_label">L'application a rencontré une erreur.</string>
+        <string id="error_500_description">Nos équipes prennent en charge votre problème.</string>
     </group>
     
 </configuration>

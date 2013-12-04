@@ -27,6 +27,21 @@ body {
 .speColorGrey, .speColorGrey a {
     color: #888;
 }
+.speColorBlueDark, .speColorBlue a {
+    color: #324197;
+}
+.speColorGreenDark, .speColorGreen a {
+    color: #438617;
+}
+.speColorOrangeDark, .speColorOrange a {
+    color: #d28000;
+}
+.speColorRedDark, .speColorRed a {
+    color: #af2000;
+}
+.speColorGreyDark, .speColorGrey a {
+    color: #666;
+}
 /* Color (hover) */
 .speColorHoverBlue:hover, .speColorHoverBlue:hover a {
     color: #3a73ad;
@@ -92,4 +107,19 @@ body {
 }
 .speBorderGrey {
     border-color: #888;
+}
+.speBorderBlueDark {
+    border-color: #324197;
+}
+.speBorderGreenDark {
+    border-color: #438617;
+}
+.speBorderOrangeDark {
+    border-color: #d28000;
+}
+.speBorderRedDark {
+    border-color: #af2000;
+}
+.speBorderGreyDark {
+    border-color: #666;
 }

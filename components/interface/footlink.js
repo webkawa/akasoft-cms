@@ -1,7 +1,6 @@
 /* Foot link component.
  * Footer navigation single item.                                               */
 
-
 function FootLinkCPN(ctn, cfg) {
     Toolkit.checkTypeOf(cfg.link, "string");
     Toolkit.checkTypeOf(cfg.label, "string");

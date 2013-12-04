@@ -9,7 +9,6 @@
     <selector id="subtitle">div > div.header > h2</selector>
     <selector id="content">div > div.content</selector>
     <selector id="main">div > div.content > div.main</selector>
-    <selector id="links" explore="true">a</selector>
     <trajectories>
         <trajectory name="PageOut">
             <speed>800</speed>
@@ -57,28 +56,35 @@
                         <h2 />
                     </div>
                     <div class="content">
-                        <div class="main">xxx</div>
+                        <div class="main" />
                     </div>
                 </div>
             ]]>
         </dom>
         <style target="wrapper">width100per height100per</style>
-        <to>SwitchPage</to>
+        <style target="title">spe-color-dark spe-border-dark spacing2px size48px marginH16px marginV8px borderB1px bolder</style>
+        <style target="main">paddingH16px</style>
+        <to>Start</to>
     </loader>
-    <master bind="click" prevent="true" transfer="false">
-        <target refresh="true">links</target>
-        <action call="to" />
-    </master>
+    <state id="Start">
+        <begin call="to">
+            <parameter>error/404</parameter>
+        </begin>
+    </state>
     <state id="Standby">
         
     </state>
-    <state id="SwitchPage">
+    <state id="SwitchPage" expect="true">
         <in from="Standby">
             <target>wrapper</target>
             <animation base="PageOut" />
         </in>
-        <begin call="refreshHeader" />
-        <begin call="refreshContent" />
+        <begin call="refresh" />
+        <begin call="defineMainHeight" />
+        <begin call="absRealHeight">
+            <parameter>content</parameter>
+            <parameter variable="true">main_height</parameter>
+        </begin>
         <begin call="go">
             <parameter>Standby</parameter>
         </begin>
@@ -87,12 +93,12 @@
             <animation base="PageIn" />
         </out>
     </state>
-    <state id="SwitchScreen">
+    <state id="SwitchScreen" expect="true">
         <in from="Standby">
             <target>main</target>
             <animation base="ScreenOut" />
         </in>
-        <begin call="refreshContent" />
+        <begin call="refresh" reference="content" />
         <begin call="go">
             <parameter>Standby</parameter>
         </begin>

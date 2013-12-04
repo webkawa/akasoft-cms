@@ -1,7 +1,6 @@
 /* Navigation component.
  * Top navigation single item.                                                  */
 
-
 function NavigationCPN(ctn, source) {
     Toolkit.checkClassOf(source, jQuery);
     

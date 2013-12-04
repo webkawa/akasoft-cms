@@ -62,7 +62,7 @@
     <state id="Hover">
         <trigger bind="click">
             <target>$SELF</target>
-            <action call="to" parent="1">
+            <action call="to" reference="$nav">
                 <parameter variable="true">link</parameter>
             </action>
         </trigger>

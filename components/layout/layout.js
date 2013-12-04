@@ -5,6 +5,7 @@ function LayoutCPN(ctn) {
     var c = new Component(ctn, "build/layout.xml");
     
     c.registerMethod(LayoutCPN.prototype.init, "init", false);
+    c.registerMethod(LayoutCPN.prototype.followLink, "followLink", false);
     c.registerMethod(LayoutCPN.prototype.defineBodyHeight, "defineBodyHeight", false);
     c.registerMethod(LayoutCPN.prototype.buildFooter, "buildFooter", false);
     c.registerMethod(LayoutCPN.prototype.buildNavigation, "buildNavigation", false);
@@ -51,11 +52,21 @@ LayoutCPN.prototype.init = function() {
     this.register("page", new PageCPN(this.qs("bodyCore")));
 };
 
+/* Redirection */
+LayoutCPN.prototype.followLink = function() {
+    if (this.qs("$TRIGGERED").is("a")) {
+        this.page.qc("to", this.qs("$TRIGGERED").attr("href"));
+    } else {
+        this.page.qc("to", this.qs("$TRIGGERED").parents("a:first()").attr("href"));
+    }
+};
+
+/* Display */
 LayoutCPN.prototype.defineBodyHeight = function() {
     var h = this.qs("$BODY").height() - 
             this.qs("header").outerHeight(true) - 
             this.qs("footer").outerHeight(true);
-    this.register("body_height", h < 640 ? "640px" : h + "px", true);
+    this.register("body_height", h < 480 ? "480px" : h + "px", true);
 };
 LayoutCPN.prototype.buildNavigation = function() {
     var ctx = this;

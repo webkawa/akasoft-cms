@@ -26,6 +26,11 @@
     <selector id="footerInnerComment">div.footer > div > div:first() > p</selector>
     <selector id="footerInnerLinks">div.footer > div > div:not(:first())</selector>
     <selector id="virtuals">div.virtuals</selector>
+    <selector id="links" explore="true">a</selector>
+    <master bind="click" prevent="true">
+        <target refresh="true">links</target>
+        <action call="followLink" />
+    </master>
     <trajectories>
         <trajectory name="FadeIn">
             <speed>1200</speed>
@@ -228,6 +233,7 @@
                 <target>bodyInner</target>
                 <animation base="OpenVertical" />
                 <post call="refresh" on="Columnable" />
+                <post call="start" reference="page" />
                 <queue>
                     <target>bodyNavigation</target>
                     <animation base="ShowNavigation" />
